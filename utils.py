@@ -1,6 +1,7 @@
 from Distribucions import uniforme_discreta
 from Distribucions import bernoulli
 import numpy
+import math
 
 def seguentVehicle():
     return bernoulli(.15, 'moto', 'cotxe')
@@ -12,9 +13,13 @@ def tempsDipositCotxe():
     return 
     
 def erlang2(u):
-    a=5
-    
-    return a
+    k=0
+    y=1
+    while k<2:
+        y=y*numpy.random.random()
+        k=k+1
+    x=(-u/k)*math.log(y)
+    return x
     
 def normalTrunc(u, sig, vmin, vmax):
     randomVal = numpy.random.normal(u, sig)

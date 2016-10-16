@@ -1,0 +1,9 @@
+diff a/utils.py b/utils.py	(rejected hunks)
+@@ -9,7 +9,6 @@
+     return erlang2(3)
+     
+ def tempsDipositCotxe():
+-    return 
+     return normalTrunc(8,2,5,13)
+     
+ def erlang2(u):
