@@ -18,7 +18,7 @@ def erlang2(u):
     while k<2:
         y=y*numpy.random.random()
         k=k+1
-    x=(-u/k)*math.log(y)
+    x=(-u/2)*math.log(y)
     return x
     
 def normalTrunc(u, sig, vmin, vmax):
