@@ -10,7 +10,7 @@ def tempsDipositMoto():
     return erlang2(3)
     
 def tempsDipositCotxe():
-    return 
+    return normalTrunc(8,2,5,13)
     
 def erlang2(u):
     k=0
