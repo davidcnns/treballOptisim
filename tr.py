@@ -30,9 +30,11 @@ def gestionarEsdeveniment():
     
     if tipusEsd == 'arribada':
         #mirar cua mes curta i afegirse
-        if esdeveniment[0][3] == 'cotxe':
+        if esdeveniment[0][2] == 'cotxe':
+            SC.append(esdeveniment.pop(0))
             
-        elif esdeveniment[0][3] == 'moto':
+        elif esdeveniment[0][2] == 'moto':
+            
             
         else:
             print('Algu ha afegit un vehicle no reconegut')
