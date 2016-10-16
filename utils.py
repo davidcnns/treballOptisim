@@ -1,0 +1,1 @@
+from Distribucions import uniforme_discreta
