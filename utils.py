@@ -31,3 +31,23 @@ def normalTrunc(u, sig, vmin, vmax):
             randomVal = numpy.random.normal(u, sig)
         count += 1
     return u
+def exponencial(u):
+        y=numpy.random.random()
+        x=(-u)*math.log(y)
+        return x    
+def llistaArribada():
+    t=0
+    C=[]
+    k=0
+    while t< 16*60:
+        if C==[]:
+            C=C+[(exponencial(5),seguentVehicle())]
+            t=t+C[0][0]
+        else:
+            t += exponencial(5)
+            C=C+[(t,seguentVehicle())]
+        k=k+1
+    return C
+            
+            
+        
