@@ -12,8 +12,9 @@ def tempsDipositCotxe():
     return 
     
 def erlang2(u):
+    a=5
     
-    return 0
+    return a
     
 def normalTrunc(u, sig, vmin, vmax):
     randomVal = numpy.random.normal(u, sig)
