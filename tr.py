@@ -106,29 +106,17 @@ def gestionarEsdeveniment():
     esdeveniment = sorted(esdeveniment, key = lambda esdeveniment:esdeveniment[0])
     
     
-def seguentEsdeveniment():
-    global rellotge
-    global SM
-    global SC
-    global C
-    global esdeveniment
-    #esdeveniment [(temps de l'esdeveniment,tipus esdeveniment,cotxe/moto,cua on espera)]
-    #primer comprova si arriba algu mes
-    if llistaArribada[0][0] == rellotge:
-        
-    esdeveniment=[]
-    
 def inicialitzarVariables():
     global rellotge
     global SM
     global SC
     global C
-    global llistaArribada
+    global esdeveniment
     
     SM = []
     SC = []
     C = []
     rellotge = 0
-    llistaArribada = llistaArribada()
+    esdeveniment = llistaArribada()
     
     return 0
