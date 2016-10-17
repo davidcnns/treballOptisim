@@ -31,6 +31,11 @@ def gestionarEsdeveniment():
     if tipusEsd == 'arribada':
         #mirar cua mes curta i afegirse
         if esdeveniment[0][2] == 'cotxe':
+            #si hi ha espai per a omplir el diposit, notifica quan acaba
+            if len(SC) < utils.lenSC:
+                esdeveniment[0][0] = rellotge + tempsDipositCotxe()
+                esdeveniment.append([esdeveniment[0][0],
+                                    'diposit ple', 'cotxe', SC])
             SC.append(esdeveniment.pop(0))
             
         elif esdeveniment[0][2] == 'moto':
@@ -39,7 +44,7 @@ def gestionarEsdeveniment():
         else:
             print('Algu ha afegit un vehicle no reconegut')
         
-    elif tipusEsd == 'surt sortidor':
+    elif tipusEsd == 'diposit ple':
     
     elif tipusEsd == 'surt caixa':
     

@@ -3,6 +3,8 @@ from Distribucions import bernoulli
 import numpy
 import math
 
+lenSC = 3
+
 def seguentVehicle():
     return bernoulli(.15, 'moto', 'cotxe')
     
