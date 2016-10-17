@@ -62,15 +62,11 @@ def gestionarEsdeveniment():
             print('Algu ha afegit un vehicle no reconegut')
         esdeveniment = sorted(esdeveniment, key = lambda esdeveniment:esdeveniment[0])
     elif tipusEsd == 'diposit ple':
-<<<<<<< HEAD
         if C==True:
             C=False
             esdeveniment.append((rellotge+2,'surt caixa',esdeveniment[0][2],esdeveniment[0][3]))
         esdeveniment.pop(0)
-            
-=======
         
->>>>>>> b774206d164a3a7ff71a4d97a67363d91e384faa
     elif tipusEsd == 'surt caixa':
         
     else:
