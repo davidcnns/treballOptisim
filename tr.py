@@ -5,7 +5,7 @@ def simulacio():
     global rellotge
     global SM
     global SC
-    global C
+    global C        #True si caixa esta lliure, false si algu esta a caixa
     global esdeveniment
     
     #comensa l'estat inicial
@@ -42,15 +42,29 @@ def gestionarEsdeveniment():
             SC.append(esdeveniment.pop(0))
             
         elif esdeveniment[0][2] == 'moto':
-            
+            if len(SM)<=len(SC):
+                if len(SM) < utils.lenSM:
+                    
+                    esdeveniment[0][0] = rellotge + tempsDipositMoto()
+                    
+                    esdeveniment.append((esdeveniment[0][0], 
+                                        'diposit ple', 'moto', SM))
+                SM.append(esdeveniment.pop(0))
+            else:
+                if len(SC) < utils.lenSC:
+                    esdeveniment[0][0] = rellotge + tempsDipositMoto()
+                    
+                    esdeveniment.append((esdeveniment[0][0],
+                                        'diposit ple', 'moto', SC))
+                SC.append(esdeveniment.pop(0))    
             
         else:
             print('Algu ha afegit un vehicle no reconegut')
-        
+        esdeveniment = sorted(esdeveniment, key = lambda esdeveniment:esdeveniment[0])
     elif tipusEsd == 'diposit ple':
-    
+        
     elif tipusEsd == 'surt caixa':
-    
+        
     else:
         print('Algu ha afegit un esdeveniment no possible!!')
     
