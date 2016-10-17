@@ -4,6 +4,7 @@ import numpy
 import math
 
 lenSC = 3
+lenSM = 2
 
 def seguentVehicle():
     return bernoulli(.15, 'moto', 'cotxe')
