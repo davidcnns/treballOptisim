@@ -36,10 +36,11 @@ def gestionarEsdeveniment():
                 #actualitza el temps de l'activitat
                 esdeveniment[0][0] = rellotge + tempsDipositCotxe()
                 #Afegeix esdeveniment de acabar
-                esdeveniment.append([esdeveniment[0][0],
-                                    'diposit ple', 'cotxe', SC])
+                esdeveniment.append((esdeveniment[0][0],
+                                    'diposit ple', 'cotxe', SC, len(SC)))
             #Afegeix el cotxe a la cua de SC
-            SC.append(esdeveniment.pop(0))
+            SC.append((esdeveniment[0][0], 'cotxe'))
+            esdeveniment.pop(0)
             
         elif esdeveniment[0][2] == 'moto':
             if len(SM)<=len(SC):
@@ -48,56 +49,79 @@ def gestionarEsdeveniment():
                     esdeveniment[0][0] = rellotge + tempsDipositMoto()
                     
                     esdeveniment.append((esdeveniment[0][0], 
-                                        'diposit ple', 'moto', SM))
-                SM.append(esdeveniment.pop(0))
+                                        'diposit ple', 'moto', SM, len(SM)))
+                    
+                SM.append((esdeveniment[0][0], 'moto'))
+                esdeveniment.pop(0)
             else:
                 if len(SC) < utils.lenSC:
                     esdeveniment[0][0] = rellotge + tempsDipositMoto()
                     
                     esdeveniment.append((esdeveniment[0][0],
-                                        'diposit ple', 'moto', SC))
-                SC.append(esdeveniment.pop(0))    
-            
+                                        'diposit ple', 'moto', SC, len(SC)))
+                SC.append((esdeveniment[0][0], 'moto'))
+                esdeveniment.pop(0)
         else:
             print('Algu ha afegit un vehicle no reconegut')
-        esdeveniment = sorted(esdeveniment, key = lambda esdeveniment:esdeveniment[0])
+            
     elif tipusEsd == 'diposit ple':
         if C==True:
             C=False
-            esdeveniment.append((rellotge+2,'surt caixa',esdeveniment[0][2],esdeveniment[0][3]))
+            esdeveniment.append((rellotge+2,'surt caixa',
+                                esdeveniment[0][2], esdeveniment[0][3], ))
+            esdeveniment[0][3][0] = edeveniment[0][0]
+            esdeveniment[0][3][0] = rellotge+2
         esdeveniment.pop(0)
         
     elif tipusEsd == 'surt caixa':
+<<<<<<< HEAD
         C=True
         esdeveniment
+=======
+        esdeveniment[0][3].pop(esdeveniment[0][4])
+        if esdeveniment[0][3] == SM:
+            if SM >= lenSM:
+                esdeveniment.append((rellotge+tempsDipositMoto(),
+                                    'diposit ple', 'moto', SM, lenSM-1))
+        else:
+            if SC >= lenSC:
+                if SC[lenSC-1][1] == 'moto':
+                    esdeveniment.append((rellotge+tempsDipositMoto(),
+                                        'diposit ple', 'moto', SC, lenSC-1))
+                else:
+                    esdeveniment.append((rellotge+tempsDipositCotxe(),
+                                        'diposit ple', 'cotxe', SC, lenSC-1))
+        cotxeAcaixa = (rellotge, 'notFound')
+        for i in range(lenSC-1):
+            if cotxeAcaixa[0] > SC[i][0]:
+                cotxeAcaixa = SC[i] + (SM, i)
+        for i in range(lenSM-1):
+            if cotxeAcaixa[0] > SM[i][0]:
+                cotxeAcaixa = SM[i] + (SM, i)
+        C = True
+        if cotxeAcaixa[1] != 'notFound':
+            C = False
+            esdeveniment.append((rellotge+2, 'surt caixa', cotxeAcaixa[1],
+                                cotxeAcaixa[2], cotxeAcaixa[3]))
+>>>>>>> 938bc45c60b1e7afd5fbf23d464709e466b52273
         
     else:
         print('Algu ha afegit un esdeveniment no possible!!')
-    
-    
-def seguentEsdeveniment():
-    global rellotge
-    global SM
-    global SC
-    global C
-    global esdeveniment
-    #esdeveniment [(temps de l'esdeveniment,tipus esdeveniment,cotxe/moto,cua on espera)]
-    #primer comprova si arriba algu mes
-    if llistaArribada[0][0] == rellotge:
         
-    esdeveniment=[]
+    esdeveniment = sorted(esdeveniment, key = lambda esdeveniment:esdeveniment[0])
+    
     
 def inicialitzarVariables():
     global rellotge
     global SM
     global SC
     global C
-    global llistaArribada
+    global esdeveniment
     
     SM = []
     SC = []
     C = []
     rellotge = 0
-    llistaArribada = llistaArribada()
+    esdeveniment = llistaArribada()
     
     return 0

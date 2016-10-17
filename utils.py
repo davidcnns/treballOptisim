@@ -52,5 +52,9 @@ def llistaArribada():
         k=k+1
     return C
             
+<<<<<<< HEAD
             
     
+=======
+        
+>>>>>>> 938bc45c60b1e7afd5fbf23d464709e466b52273
