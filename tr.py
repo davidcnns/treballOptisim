@@ -33,9 +33,12 @@ def gestionarEsdeveniment():
         if esdeveniment[0][2] == 'cotxe':
             #si hi ha espai per a omplir el diposit, notifica quan acaba
             if len(SC) < utils.lenSC:
+                #actualitza el temps de l'activitat
                 esdeveniment[0][0] = rellotge + tempsDipositCotxe()
+                #Afegeix esdeveniment de acabar
                 esdeveniment.append([esdeveniment[0][0],
                                     'diposit ple', 'cotxe', SC])
+            #Afegeix el cotxe a la cua de SC
             SC.append(esdeveniment.pop(0))
             
         elif esdeveniment[0][2] == 'moto':
