@@ -1,4 +1,5 @@
-from utils import seguentVehicle, tempsDipositMoto, tempsDipositCotxe, llistaArribada
+import utils
+from utils import seguentVehicle, tempsDipositMoto, tempsDipositCotxe, llistaArribada, lenSM, lenSC
 
 
 def simulacio():
@@ -69,15 +70,15 @@ def gestionarEsdeveniment():
             C=False
             esdeveniment.append((rellotge+2,'surt caixa',
                                 esdeveniment[0][2], esdeveniment[0][3], ))
-            esdeveniment[0][3][0] = edeveniment[0][0]
+            esdeveniment[0][3][0] = esdeveniment[0][0]
             esdeveniment[0][3][0] = rellotge+2
         esdeveniment.pop(0)
         
     elif tipusEsd == 'surt caixa':
-<<<<<<< HEAD
+
         C=True
         esdeveniment
-=======
+
         esdeveniment[0][3].pop(esdeveniment[0][4])
         if esdeveniment[0][3] == SM:
             if SM >= lenSM:
@@ -103,7 +104,6 @@ def gestionarEsdeveniment():
             C = False
             esdeveniment.append((rellotge+2, 'surt caixa', cotxeAcaixa[1],
                                 cotxeAcaixa[2], cotxeAcaixa[3]))
->>>>>>> 938bc45c60b1e7afd5fbf23d464709e466b52273
         
     else:
         print('Algu ha afegit un esdeveniment no possible!!')
