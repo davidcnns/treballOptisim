@@ -52,5 +52,4 @@ def llistaArribada():
         k=k+1
     return C
             
-            
         
