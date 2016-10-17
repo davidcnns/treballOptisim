@@ -1,5 +1,4 @@
-import utils
-from utils import seguentVehicle, tempsDipositMoto, tempsDipositCotxe, llistaArribada, lenSM, lenSC
+from utils import seguentVehicle, tempsDipositMoto, tempsDipositCotxe, llistaArribada
 
 
 def simulacio():
@@ -8,14 +7,16 @@ def simulacio():
     global SC
     global C        #True si caixa esta lliure, false si algu esta a caixa
     global esdeveniment
+    global lenSC
+    global lenSM
+    
     
     #comensa l'estat inicial
     inicialitzarVariables()
+    while len(esdeveniment) > 0:
+        gestionarEsdeveniment()
     
-
-    gestionarEsdeveniment()
-    
-    
+    print('Ha acabat')
     return 0
     
     
@@ -33,7 +34,7 @@ def gestionarEsdeveniment():
         #mirar cua mes curta i afegirse
         if esdeveniment[0][2] == 'cotxe':
             #si hi ha espai per a omplir el diposit, notifica quan acaba
-            if len(SC) < utils.lenSC:
+            if len(SC) < lenSC:
                 #actualitza el temps de l'activitat
                 esdeveniment[0][0] = rellotge + tempsDipositCotxe()
                 #Afegeix esdeveniment de acabar
@@ -45,7 +46,7 @@ def gestionarEsdeveniment():
             
         elif esdeveniment[0][2] == 'moto':
             if len(SM)<=len(SC):
-                if len(SM) < utils.lenSM:
+                if len(SM) < lenSM:
                     
                     esdeveniment[0][0] = rellotge + tempsDipositMoto()
                     
@@ -55,7 +56,7 @@ def gestionarEsdeveniment():
                 SM.append((esdeveniment[0][0], 'moto'))
                 esdeveniment.pop(0)
             else:
-                if len(SC) < utils.lenSC:
+                if len(SC) < lenSC:
                     esdeveniment[0][0] = rellotge + tempsDipositMoto()
                     
                     esdeveniment.append((esdeveniment[0][0],
@@ -107,6 +108,7 @@ def gestionarEsdeveniment():
         
     else:
         print('Algu ha afegit un esdeveniment no possible!!')
+        print(esdeveniment[1])
         
     esdeveniment = sorted(esdeveniment, key = lambda esdeveniment:esdeveniment[0])
     
@@ -117,7 +119,11 @@ def inicialitzarVariables():
     global SC
     global C
     global esdeveniment
+    global lenSC
+    global lenSM
     
+    lenSC = 30
+    lenSM = 2
     SM = []
     SC = []
     C = []

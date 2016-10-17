@@ -3,9 +3,6 @@ from Distribucions import bernoulli
 import numpy
 import math
 
-lenSC = 3
-lenSM = 2
-
 def seguentVehicle():
     return bernoulli(.15, 'moto', 'cotxe')
     
@@ -44,17 +41,10 @@ def llistaArribada():
     k=0
     while t< 16*60:
         if C==[]:
-            C=C+[(exponencial(5),'arribada' ,seguentVehicle(), [],0)]
+            C.append((exponencial(5),'arribada' ,seguentVehicle(), [],0))
             t=t+C[0][0]
         else:
             t += exponencial(5)
-            C=C+[(t,'arribada', seguentVehicle(), [],len(C))]
+            C.append((t,'arribada', seguentVehicle(), [], 0))
         k=k+1
     return C
-            
-<<<<<<< HEAD
-            
-    
-=======
-        
->>>>>>> 938bc45c60b1e7afd5fbf23d464709e466b52273
