@@ -68,6 +68,8 @@ def gestionarEsdeveniment():
         esdeveniment.pop(0)
         
     elif tipusEsd == 'surt caixa':
+        C=True
+        esdeveniment
         
     else:
         print('Algu ha afegit un esdeveniment no possible!!')

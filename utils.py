@@ -44,13 +44,13 @@ def llistaArribada():
     k=0
     while t< 16*60:
         if C==[]:
-            C=C+[(exponencial(5),'arribada' ,seguentVehicle(), [])]
+            C=C+[(exponencial(5),'arribada' ,seguentVehicle(), [],0)]
             t=t+C[0][0]
         else:
             t += exponencial(5)
-            C=C+[(t,'arribada', seguentVehicle(), [])]
+            C=C+[(t,'arribada', seguentVehicle(), [],len(C))]
         k=k+1
     return C
             
             
-        
+    
