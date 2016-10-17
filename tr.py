@@ -48,7 +48,11 @@ def gestionarEsdeveniment():
             print('Algu ha afegit un vehicle no reconegut')
         
     elif tipusEsd == 'diposit ple':
-    
+        if C==True:
+            C=False
+            esdeveniment.append((rellotge+2,'surt caixa',esdeveniment[0][2],esdeveniment[0][3]))
+        esdeveniment.pop(0)
+            
     elif tipusEsd == 'surt caixa':
     
     else:
@@ -65,7 +69,7 @@ def seguentEsdeveniment():
     #primer comprova si arriba algu mes
     if llistaArribada[0][0] == rellotge:
         
-    
+    esdeveniment=[]
     
 def inicialitzarVariables():
     global rellotge
