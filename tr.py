@@ -53,7 +53,7 @@ def seguentEsdeveniment():
     global SC
     global C
     global esdeveniment
-    
+    #esdeveniment [(temps de l'esdeveniment,tipus esdeveniment,cotxe/moto,cua on espera)]
     #primer comprova si arriba algu mes
     if llistaArribada[0][0] == rellotge:
         
