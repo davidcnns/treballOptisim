@@ -24,7 +24,7 @@ def simulacio():
     print('Longituds:')
     print(len(SC))
     print(len(SM))
-    print('Num veh: ' + str(params[0]) + '  Num caix: ' + str(params[1]))
+    print('Num veh: ' + str(params[0]) + '  Num caix: ' + str(params[1]) + ' Gent que espera:  ' + str(params[2]))
     return 0
     
     
@@ -89,11 +89,25 @@ def gestionarEsdeveniment():
                 if i < len(esdeveniment[0][3]) and cotxeAcaixa > esdeveniment[0][3][i][0]:
                     cotxeAcaixa = esdeveniment[0][3][i][0]
                     index = i
-            #perque hi ha aquest if aqui?
             if len(esdeveniment[0][3]) > 0:
                    esdeveniment.append([rellotge+2,'surt caixa',
                                        esdeveniment[0][2], esdeveniment[0][3], index])
-        esdeveniment.pop(0)
+            
+            #aixo ho he posat aqui dalt perque no em borri el que canvio en l'else de sota
+            
+
+        
+        #fins aqui, si la caixa estigues ocupada marxaria, per tant ho hem d'arreglar:        
+        else:
+            for i in rangeen(esdeveniment)-1:
+                if esdeveniment[i+1][1] == 'surt caixa':
+                    #esdeveniment[0][0] = esdeveniment[i+1][0] + 0.00001
+                    temps_triga = esdeveniment[i+1][0]
+                    esdeveniment.append([temps_triga+2,'surt caixa',
+                                       esdeveniment[0][2], esdeveniment[0][3], index])
+                    #esdeveniment.insert(i+1, esdeveniment.pop(0))
+                    break
+        esdeveniment.pop(0)  
         
     elif tipusEsd == 'surt caixa':
         
@@ -148,9 +162,9 @@ def inicialitzarVariables():
     global lenSM
     global params
     
-    params = [0,0]
+    params = [0,0,0]
     
-    lenSC = 3
+    lenSC = 4
     lenSM = 2
     SM = []
     SC = []

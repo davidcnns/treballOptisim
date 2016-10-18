@@ -39,6 +39,7 @@ def llistaArribada():
     t=0
     car=[]
     k=0
+    while t< 30:
         if car==[]:
             car.append([exponencial(5),'arribada' ,seguentVehicle(), [],0])
             t=t+car[0][0]
