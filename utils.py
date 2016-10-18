@@ -37,14 +37,16 @@ def exponencial(u):
         return x    
 def llistaArribada():
     t=0
-    C=[]
+    car=[]
     k=0
     while t< 16*60:
-        if C==[]:
-            C.append((exponencial(5),'arribada' ,seguentVehicle(), [],0))
-            t=t+C[0][0]
+        if car==[]:
+            car.append([exponencial(5),'arribada' ,seguentVehicle(), [],0])
+            t=t+car[0][0]
         else:
             t += exponencial(5)
-            C.append((t,'arribada', seguentVehicle(), [], 0))
+            car.append([t,'arribada', seguentVehicle(), [], 0])
         k=k+1
-    return C
+    car = sorted(car, key = lambda car: car[0])
+    print(car)
+    return car
