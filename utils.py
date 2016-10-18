@@ -39,7 +39,7 @@ def llistaArribada():
     t=0
     car=[]
     k=0
-    while t< 16*60:
+    while t< 16*60:#16*60:
         if car==[]:
             car.append([exponencial(5),'arribada' ,seguentVehicle(), [],0])
             t=t+car[0][0]
@@ -47,6 +47,6 @@ def llistaArribada():
             t += exponencial(5)
             car.append([t,'arribada', seguentVehicle(), [], 0])
         k=k+1
+    print(car[-1][0])
     car = sorted(car, key = lambda car: car[0])
-    print(car)
     return car
