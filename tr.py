@@ -89,6 +89,7 @@ def gestionarEsdeveniment():
                 if i < len(esdeveniment[0][3]) and cotxeAcaixa > esdeveniment[0][3][i][0]:
                     cotxeAcaixa = esdeveniment[0][3][i][0]
                     index = i
+            #perque hi ha aquest if aqui?
             if len(esdeveniment[0][3]) > 0:
                    esdeveniment.append([rellotge+2,'surt caixa',
                                        esdeveniment[0][2], esdeveniment[0][3], index])
