@@ -66,10 +66,18 @@ def gestionarEsdeveniment():
             esdeveniment.append([t,'diposit ple', infVeh])
         else:
             #no fa re, el seguent cotxe que surti mirara si algu ha de omplir el diposit
+        
         #Afegir el vehicle a la cua
         ST.append(infVeh)
         
-    elif esd[]
+    elif esd[1] == 'diposit ple':
+        
+        
+        lST, ST, index = 
+        
+        
+        
+        
     if tipusEsd == 'arribada':
         #mirar cua mes curta i afegirse
         if esdeveniment[0][2] == 'cotxe':
