@@ -59,18 +59,3 @@ def llistaArribada():
         k += 1
     #retorna la llista amb tots els esdeveniments ja ordenats
     return llista
-    
-    t=0
-    car=[]
-    k=0
-    while t< 30:
-        if car==[]:
-            car.append([exponencial(5),'arribada' ,seguentVehicle(), [],0])
-            t=t+car[0][0]
-        else:
-            t += exponencial(5)
-            car.append([t,'arribada', seguentVehicle(), [], 0])
-        k=k+1
-    print(car[-1][0])
-    car = sorted(car, key = lambda car: car[0])
-    return car
