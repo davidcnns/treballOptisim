@@ -16,6 +16,9 @@ def simulacio():
     inicialitzarVariables()
     params[0] = len(esdeveniment)
     while len(esdeveniment) > 0:
+        print(rellotge)
+        print (SC)
+        print(SM)
         gestionarEsdeveniment()
         
     
@@ -24,7 +27,7 @@ def simulacio():
     print('Longituds:')
     print(len(SC))
     print(len(SM))
-    print('Num veh: ' + str(params[0]) + '  Num caix: ' + str(params[1]) + ' Gent que espera:  ' + str(params[2]))
+    print('Num veh: ' + str(params[0]) + '  Num caix: ' + str(params[1]))
     return 0
     
     
@@ -75,9 +78,7 @@ def gestionarEsdeveniment():
                 esdeveniment.pop(0)
         else:
             print('Algu ha afegit un vehicle no reconegut')
-    elif tipusEsd == 'diposit ple':
-        if C==True:
-            C = False
+    elif tipusEsd == 'diposit ple':     
             
             if esdeveniment[0][3] == SC:
                 lenNe = lenSC
@@ -89,33 +90,51 @@ def gestionarEsdeveniment():
                 if i < len(esdeveniment[0][3]) and cotxeAcaixa > esdeveniment[0][3][i][0]:
                     cotxeAcaixa = esdeveniment[0][3][i][0]
                     index = i
-            if len(esdeveniment[0][3]) > 0:
-                   esdeveniment.append([rellotge+2,'surt caixa',
-                                       esdeveniment[0][2], esdeveniment[0][3], index])
+            if C == True and len(esdeveniment[0][3]) > 0:
+                C = False
+                esdeveniment.append([rellotge+2,'surt caixa',
+                                       esdeveniment[0][2], esdeveniment[0][3], index])          
+            else:
+                for i in range(len(esdeveniment)-1):
+                    
+                    e=len(esdeveniment)-i
+                    if esdeveniment[e-1][1] == 'surt caixa':
+                        #esdeveniment[0][0] = esdeveniment[i+1][0] + 0.00001
+                        esdeveniment.append([esdeveniment[e-1][0]+2,'surt caixa',
+                                             esdeveniment[0][2], esdeveniment[0][3],index])
+                        break
+                        #esdeveniment.insert(i+1, esdeveniment.pop(0))
+            esdeveniment.pop(0)
             
-            #aixo ho he posat aqui dalt perque no em borri el que canvio en l'else de sota
-            
-
-        
-        #fins aqui, si la caixa estigues ocupada marxaria, per tant ho hem d'arreglar:        
-        else:
-            for i in rangeen(esdeveniment)-1:
-                if esdeveniment[i+1][1] == 'surt caixa':
-                    #esdeveniment[0][0] = esdeveniment[i+1][0] + 0.00001
-                    temps_triga = esdeveniment[i+1][0]
-                    esdeveniment.append([temps_triga+2,'surt caixa',
-                                       esdeveniment[0][2], esdeveniment[0][3], index])
-                    #esdeveniment.insert(i+1, esdeveniment.pop(0))
-                    break
-        esdeveniment.pop(0)  
+         
         
     elif tipusEsd == 'surt caixa':
         
-        params[1] +=1;
-        esdeveniment[0][3].pop(esdeveniment[0][4])
         
         if esdeveniment[0][3] == SM:
-            if len(SM) >= lenSM and SM[lenSM-1][0] == 0:
+            e=100000000000
+            a=-1
+            t=0
+            for i in SM:
+                a=a+1
+                if i[0]<e:
+                    e=i[0]
+                    t=a
+                
+                a=a+1
+            SM.pop(t-1)
+        if esdeveniment[0][3] == SC:
+            e=10000000000000
+            a=-1
+            for i in SC:
+                a=a+1
+                if i[0]<e:
+                    e=i[0]
+                    t=a
+                a=a+1
+            SC.pop(t-1)   
+        
+            """if len(SM) >= lenSM and SM[lenSM-1][0] == 0:
                 esdeveniment.append([rellotge+tempsDipositMoto(),
                                     'diposit ple', 'moto', SM,
                                     min(lenSM-1, len(SM))])
@@ -128,7 +147,7 @@ def gestionarEsdeveniment():
                 else:
                     esdeveniment.append([rellotge+tempsDipositCotxe(),
                                         'diposit ple', 'cotxe', SC, 
-                                        min(lenSC-1, len(SC))])
+                                        min(lenSC-1, len(SC))])"""
         
         cotxeAcaixa = [rellotge, 'notFound']
         llista = []
@@ -146,6 +165,7 @@ def gestionarEsdeveniment():
             esdeveniment.append([rellotge+2, 'surt caixa', cotxeAcaixa[1],
                                 llista[0], llista[1]])
         esdeveniment.pop(0)
+        params[1] +=1;
     else:
         print('Algu ha afegit un esdeveniment no possible!!')
     esdeveniment = sorted(esdeveniment, key =  lambda esdeveniment: esdeveniment[0])
@@ -162,7 +182,7 @@ def inicialitzarVariables():
     global lenSM
     global params
     
-    params = [0,0,0]
+    params = [0,0,0,0,0,0]
     
     lenSC = 4
     lenSM = 2

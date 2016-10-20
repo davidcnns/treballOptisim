@@ -46,6 +46,7 @@ def exponencial(u):
         
 #genera tots els esdeveniments d'arribada durant el dia
 def llistaArribada():
+<<<<<<< HEAD
     t = 0
     llista = []
     k = 0
@@ -59,3 +60,19 @@ def llistaArribada():
         k += 1
     #retorna la llista amb tots els esdeveniments ja ordenats
     return llista
+=======
+    t=0
+    car=[]
+    k=0
+    while t< 30:
+        if car==[]:
+            car.append([exponencial(5),'arribada' ,seguentVehicle(), [],0])
+            t=t+car[0][0]
+        else:
+            t += exponencial(5)
+            car.append([t,'arribada', seguentVehicle(), [], 0])
+        k=k+1
+    print(car[-1][0])
+    car = sorted(car, key = lambda car: car[0])
+    return car
+>>>>>>> f9c2857e98f8ac0a03451a47730da6695aa2428e
