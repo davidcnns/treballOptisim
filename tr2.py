@@ -78,7 +78,12 @@ def gestionarEsdeveniment():
         
         lST, ST, index = 
         
+    
+    
+    
+    elif esd[1] == 'sortir caixa':
         
+        lST, ST, index = agafarCuaVehicle(infoVeh)
         
         
     if tipusEsd == 'arribada':
