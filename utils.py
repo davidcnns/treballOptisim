@@ -56,7 +56,7 @@ def llistaArribada():
     llista = []
     k = 0
     t = exponencial(5)
-    while t< 10:#16*60:
+    while t< 16*60:
         #afegeix cotxe a la llista
         llista.append([t, 'arribada', [t, 0,0,0,0, seguentVehicle(), 'id' + str(k)]])
         

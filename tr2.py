@@ -124,6 +124,9 @@ def gestionarEsdeveniment():
         ##################
         #Mirar si algu ha de omplir el diposit
         
+        #Treure el cotxe de la llista
+        ST.pop(index)
+        
         minim = rellotge
         vehicle = []
         #Mirar si algun vehicle ha acabat de omplir el diposit
@@ -153,8 +156,7 @@ def gestionarEsdeveniment():
             #Crear nou esdeveniment
             esdeveniment.append([vehicle[4], 'sortir caixa', vehicle])
         
-        #Treure el cotxe de la llista
-        ST.pop(index)
+        
     else:
         sys.exit('Esdeveniment no possible')
         
