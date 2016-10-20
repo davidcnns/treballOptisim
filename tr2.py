@@ -6,6 +6,7 @@ Created on Thu Oct 20 11:55:12 2016
 """
 
 from utils import seguentVehicle, tempsDipositMoto, tempsDipositCotxe, llistaArribada
+import sys
 
 
 def simulacio():
@@ -87,6 +88,8 @@ def gestionarEsdeveniment():
         if C==True:
             C = False
             
+            
+            
             if esdeveniment[0][3] == SC:
                 lenNe = lenSC
             else:
@@ -103,6 +106,8 @@ def gestionarEsdeveniment():
         esdeveniment.pop(0)
         
     elif tipusEsd == 'surt caixa':
+        
+                
         
         params[1] +=1;
         esdeveniment[0][3].pop(esdeveniment[0][4])
@@ -172,3 +177,37 @@ def inicialitzarVariables():
     rellotge = 0
     
     return 0
+
+
+
+#retorna la longitud de la llista a on es posara i quina es.
+def agafarCuaCorresponent(info):
+    global SM
+    global SC
+    
+    if info[5] == 'cotxe':
+        return lSC,SC
+    elif info[5] == 'moto':
+        if len(SM)<=len(SC):
+            return lSM,SM
+        else:
+            return lSC,SC
+    else:
+        sys.exit('error a agafarCuaCorresponent' + info[5])
+
+
+
+#retorna longitud de la llista on esta, la llista i la posicio a dins de la llista.
+def agafarCuaVehicle(info):
+    mat = info[6]
+    for i in SC:
+        if i[6] == mat:
+            return lSC,SC,SC.index(i)
+    for i in SM:
+        if i[6] == mat:
+            return lSM,SM,SM.index(i)
+    sys.exit('error: no entra be a agafarCuaVehicle')
+    
+    
+
+    
