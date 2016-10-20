@@ -58,28 +58,33 @@ def gestionarEsdeveniment():
         
         #Mirar si el vehicle pot comensar a omplir el diposit
         if lST > len(ST):   #si que pot
-            #Indicar quan acabara d'omplir el diposit
-            t = rellotge + tempsDipositVehicle(infVeh)
-            
             #Guardar info de quan ha comensat a omplir el diposit
             infVeh[1] = rellotge
             #Guardar info de quan acabara d'omplir el diposit
-            infVeh[2] = t
+            infVeh[2] = rellotge + tempsDipositVehicle(infVeh)
             #Afegir l'esdeveniment
-            esdeveniment.append([t,'diposit ple', infVeh])
-        else:
+            esdeveniment.append([infVeh[2],'diposit ple', infVeh])
+        #else:
             #no fa re, el seguent cotxe que surti mirara si algu ha de omplir el diposit
-        
+            
         #Afegir el vehicle a la cua
         ST.append(infVeh)
         
     elif esd[1] == 'diposit ple':
-        
-        
-        lST, ST, index = 
-        
-    
-    
+        if C == True:
+            lST, ST, index = agafarCuaVehicle(infVeh)
+            #Evitar que ningu mes entri a caixa
+            C = False
+            #Guardar info de quan entra a caixa
+            infVeh[3] = rellotge
+            #Guardar info de quan sortira de caixa
+            infVeh[4] = rellotge + 2
+            #Actualitzar llista on esta el vehicle
+            ST[index] = infVeh
+            #Crear nou esdeveniment
+            esdeveniment.append([infVeh[4], 'sortir caixa', infVeh])
+        #else:
+            #Esperar-se per anar a caixa
     
     elif esd[1] == 'sortir caixa':
         
