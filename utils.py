@@ -3,6 +3,12 @@ from Distribucions import bernoulli
 import numpy
 import math
 
+def tempsDipositVehicle(vehicle):
+    if vehicle[5] == 'cotxe':
+        return tempsDipositCotxe()
+    elif vehicle[5] == 'moto':
+        return tempsDipositMoto()
+
 #Defineix de forma aleatoria el quin tipus de vehicle sera el seguent
 def seguentVehicle():
     return bernoulli(.15, 'moto', 'cotxe')
