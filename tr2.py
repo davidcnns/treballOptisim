@@ -128,8 +128,19 @@ def gestionarEsdeveniment():
         
         if vehicle != []:
             
+            lST2, ST2, index2 = agafarCuaVehicle(vehicle)
+            #Evitar que ningu mes entri a caixa
+            C = False
+            #Guardar info de quan entra a caixa
+            vehicle[3] = rellotge
+            #Guardar info de quan sortira de caixa
+            vehicle[4] = rellotge + 2
+            #Actualitzar llista on esta el vehicle
+            ST2[index2] = vehicle
+            #Crear nou esdeveniment
+            esdeveniment.append([vehicle[4], 'sortir caixa', vehicle])
                 
-            
+        ST.pop(index)
         
         
     if tipusEsd == 'arribada':
