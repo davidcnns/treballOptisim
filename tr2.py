@@ -88,7 +88,48 @@ def gestionarEsdeveniment():
     
     elif esd[1] == 'sortir caixa':
         
+        C = True
+        
         lST, ST, index = agafarCuaVehicle(infoVeh)
+        
+        #mirar si algu ha de começar a omplir el diposit
+        if lST < len(ST):
+            #Indicar quan acabara d'omplir el diposit
+            t = rellotge + tempsDipositVehicle(infVeh)
+            
+            #Copiar llista ST per modificarla més facilment
+            vehicle = ST(lST)
+            
+            #Guardar info de quan ha comensat a omplir el diposit
+            vehicle[1] = rellotge
+            
+            #Guardar info de quan acabara d'omplir el diposit
+            vehicle[2] = t
+            
+            #Actualitzar llista ST (SC o SM)
+            ST(lST) = vehicle
+            
+            #Guardar info de quan acabara d'omplir el diposit
+            infVeh[2] = t
+            #Afegir l'esdeveniment
+            esdeveniment.append([t,'diposit ple', vehicle])
+        
+        minim = rellotge
+        vehicle = []
+        
+        for veh in SC:
+            if 0 != veh[2] < min:
+                minim = veh[2]
+                vehicle = veh
+        for veh in SM:
+            if 0 != veh[2] < min:
+                minim = veh[2]
+                vehicle = veh
+        
+        if vehicle != []:
+            
+                
+            
         
         
     if tipusEsd == 'arribada':
