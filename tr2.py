@@ -26,11 +26,11 @@ def simulacio():
     #Executa cada esdeveniment fins a finalitzar la cua d'esdeveniments
     #la cua d'esdeveniments no pot ser infinita
     while len(esdeveniment) > 0:
-        #Gestionar un esdeveniment
-        gestionarEsdeveniment()
-        
         #Agafar seguent estat de l'esdeveniment
         rellotge = esdeveniment[0][0]
+        
+        #Gestionar un esdeveniment
+        gestionarEsdeveniment()
         
     #Aqui caldria imprimir la informacio util
 
@@ -72,6 +72,7 @@ def gestionarEsdeveniment():
         
     elif esd[1] == 'diposit ple':
         if C == True:
+            print('ln76')
             lST, ST, index = agafarCuaVehicle(infVeh)
             #Evitar que ningu mes entri a caixa
             C = False
@@ -80,25 +81,33 @@ def gestionarEsdeveniment():
             #Guardar info de quan sortira de caixa
             infVeh[4] = rellotge + 2
             #Actualitzar llista on esta el vehicle
+            print('DOING SOMETHINNNNNGGG:    '+str(index))
+            print(SM)
+            print(SC)
             ST[index] = infVeh
+            print(SM)
+            print(SC)
             #Crear nou esdeveniment
             esdeveniment.append([infVeh[4], 'sortir caixa', infVeh])
         #else:
             #Esperar-se per anar a caixa
     
     elif esd[1] == 'sortir caixa':
-        
+        #Lliurar caixa
         C = True
         
-        lST, ST, index = agafarCuaVehicle(infoVeh)
+        #Agafar info del cotxe que surt
+        print('ln94')
+        lST, ST, index = agafarCuaVehicle(infVeh)
         
+        ##################
         #mirar si algu ha de começar a omplir el diposit
         if lST < len(ST):
-            #Indicar quan acabara d'omplir el diposit
-            t = rellotge + tempsDipositVehicle(infVeh)
-            
             #Copiar llista ST per modificarla més facilment
-            vehicle = ST(lST)
+            vehicle = ST[lST]
+
+            #Indicar quan acabara d'omplir el diposit
+            t = rellotge + tempsDipositVehicle(vehicle)
             
             #Guardar info de quan ha comensat a omplir el diposit
             vehicle[1] = rellotge
@@ -107,27 +116,31 @@ def gestionarEsdeveniment():
             vehicle[2] = t
             
             #Actualitzar llista ST (SC o SM)
-            ST(lST) = vehicle
+            ST[lST] = vehicle
             
-            #Guardar info de quan acabara d'omplir el diposit
-            infVeh[2] = t
             #Afegir l'esdeveniment
             esdeveniment.append([t,'diposit ple', vehicle])
         
+        ##################
+        #Mirar si algu ha de omplir el diposit
+        
         minim = rellotge
         vehicle = []
-        
+        #Mirar si algun vehicle ha acabat de omplir el diposit
+        #Comprovar lllista SC
         for veh in SC:
-            if 0 != veh[2] < min:
+            if 0 != veh[2] < minim:
                 minim = veh[2]
                 vehicle = veh
+        #Comprovar llista SM
         for veh in SM:
-            if 0 != veh[2] < min:
+            if 0 != veh[2] < minim:
                 minim = veh[2]
                 vehicle = veh
         
+        #Si algun vehicle ha d'anar a caixa ho fa
         if vehicle != []:
-            
+            print('ln137')
             lST2, ST2, index2 = agafarCuaVehicle(vehicle)
             #Evitar que ningu mes entri a caixa
             C = False
@@ -139,110 +152,12 @@ def gestionarEsdeveniment():
             ST2[index2] = vehicle
             #Crear nou esdeveniment
             esdeveniment.append([vehicle[4], 'sortir caixa', vehicle])
-                
+        
+        #Treure el cotxe de la llista
         ST.pop(index)
-        
-        
-    if tipusEsd == 'arribada':
-        #mirar cua mes curta i afegirse
-        if esdeveniment[0][2] == 'cotxe':
-            #si hi ha espai per a omplir el diposit, notifica quan acaba
-            if len(SC) < lenSC:
-                #actualitza el temps de l'activitat
-                esdeveniment[0][0] = rellotge + tempsDipositCotxe()
-                #Afegeix esdeveniment de acabar
-                esdeveniment.append([esdeveniment[0][0],
-                                    'diposit ple', 'cotxe', SC, len(SC)])
-                SC.append([esdeveniment[0][0], 'cotxe'])
-            else:
-                SC.append([0, 'cotxe'])
-            esdeveniment.pop(0)
-            
-        elif esdeveniment[0][2] == 'moto':
-            if len(SM)<=len(SC):
-                if len(SM) < lenSM:
-                    
-                    esdeveniment[0][0] = rellotge + tempsDipositMoto()
-                    
-                    esdeveniment.append([esdeveniment[0][0], 
-                                        'diposit ple', 'moto', SM, len(SM)])
-                    
-                SM.append([esdeveniment[0][0], 'moto'])
-                esdeveniment.pop(0)
-            else:
-                if len(SC) < lenSC:
-                    esdeveniment[0][0] = rellotge + tempsDipositMoto()
-                    
-                    esdeveniment.append([esdeveniment[0][0],
-                                        'diposit ple', 'moto', SC, len(SC)])
-                SC.append([esdeveniment[0][0], 'moto'])
-                esdeveniment.pop(0)
-        else:
-            print('Algu ha afegit un vehicle no reconegut')
-    elif tipusEsd == 'diposit ple':
-        if C==True:
-            C = False
-            
-            
-            
-            if esdeveniment[0][3] == SC:
-                lenNe = lenSC
-            else:
-                lenNe = lenSM
-            cotxeAcaixa = rellotge + 1
-            index = 0
-            for i in range(lenNe-1):
-                if i < len(esdeveniment[0][3]) and cotxeAcaixa > esdeveniment[0][3][i][0]:
-                    cotxeAcaixa = esdeveniment[0][3][i][0]
-                    index = i
-            if len(esdeveniment[0][3]) > 0:
-                   esdeveniment.append([rellotge+2,'surt caixa',
-                                       esdeveniment[0][2], esdeveniment[0][3], index])
-        esdeveniment.pop(0)
-        
-    elif tipusEsd == 'surt caixa':
-        
-                
-        
-        params[1] +=1;
-        esdeveniment[0][3].pop(esdeveniment[0][4])
-        
-        if esdeveniment[0][3] == SM:
-            if len(SM) >= lenSM and SM[lenSM-1][0] == 0:
-                esdeveniment.append([rellotge+tempsDipositMoto(),
-                                    'diposit ple', 'moto', SM,
-                                    min(lenSM-1, len(SM))])
-        else:
-            if len(SC) >= lenSC and SC[lenSC-1][0] == 0:
-                if SC[lenSC-1][1] == 'moto':
-                    esdeveniment.append([rellotge+tempsDipositMoto(),
-                                        'diposit ple', 'moto', SC,
-                                        min(lenSC-1, len(SC))])
-                else:
-                    esdeveniment.append([rellotge+tempsDipositCotxe(),
-                                        'diposit ple', 'cotxe', SC, 
-                                        min(lenSC-1, len(SC))])
-        
-        cotxeAcaixa = [rellotge, 'notFound']
-        llista = []
-        for i in range(lenSC-1):
-            if i < len(SC) and cotxeAcaixa[0] > SC[i][0]:
-                cotxeAcaixa = SC[i]
-                llista = [SC, i]
-        for i in range(lenSM-1):
-            if i < len(SM) and cotxeAcaixa[0] > SM[i][0]:
-                cotxeAcaixa = SM[i]
-                llista = [SM, i]
-        C = True
-        if cotxeAcaixa[1] != 'notFound':
-            C = False
-            esdeveniment.append([rellotge+2, 'surt caixa', cotxeAcaixa[1],
-                                llista[0], llista[1]])
-        esdeveniment.pop(0)
     else:
-        print('Algu ha afegit un esdeveniment no possible!!')
-    esdeveniment = sorted(esdeveniment, key =  lambda esdeveniment: esdeveniment[0])
-    
+        sys.exit('Esdeveniment no possible')
+        
     return 0
     
 def inicialitzarVariables():
@@ -259,17 +174,14 @@ def inicialitzarVariables():
     lSM = 2
     
     #Indicar que les cues SM i SC son diccionaris
-    SM = {}
-    SC = {}
+    SM = []
+    SC = []
     
     #indicar que caixa esta buida
     C = True
     
     #Crear tots els esdeveniments d'arribada
     esdeveniment = llistaArribada()
-    
-    #indicar temps inicial
-    rellotge = 0
     
     return 0
 
@@ -301,6 +213,11 @@ def agafarCuaVehicle(info):
     for i in SM:
         if i[6] == mat:
             return lSM,SM,SM.index(i)
+    print(info)
+    print('Cua SC')
+    print(SC)
+    print('Cua SM')
+    print(SM)
     sys.exit('error: no entra be a agafarCuaVehicle')
     
     
