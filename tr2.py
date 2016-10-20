@@ -46,10 +46,13 @@ def gestionarEsdeveniment():
     global lSC
     global lSM
     
+    #Agafar esdeveniment
     esd = esdeveniment.pop(0)
     
+    #Agafar info del cotxe de l'esdeveniment
+    infVeh = esd[2]
+
     if esd[1] == 'arribada':
-        infVeh = esd[2]
         #Assignar una cua al vehicle (en funcio del tipus i de les cues)
         lST, ST = agafarCuaCorresponent(infVeh)
         
