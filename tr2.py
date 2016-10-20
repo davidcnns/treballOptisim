@@ -6,6 +6,7 @@ Created on Thu Oct 20 11:55:12 2016
 """
 
 from utils import seguentVehicle, tempsDipositMoto, tempsDipositCotxe, llistaArribada
+from utils import tempsDipositVehicle
 import sys
 
 
@@ -45,9 +46,30 @@ def gestionarEsdeveniment():
     global lSC
     global lSM
     
-    rellotge = esdeveniment[0][0]
-    tipusEsd = esdeveniment[0][1]
+    esd = esdeveniment.pop(0)
     
+    if esd[1] == 'arribada':
+        infVeh = esd[2]
+        #Assignar una cua al vehicle (en funcio del tipus i de les cues)
+        lST, ST = agafarCuaCorresponent(infVeh)
+        
+        #Mirar si el vehicle pot comensar a omplir el diposit
+        if lST > len(ST):   #si que pot
+            #Indicar quan acabara d'omplir el diposit
+            t = rellotge + tempsDipositVehicle(infVeh)
+            
+            #Guardar info de quan ha comensat a omplir el diposit
+            infVeh[1] = rellotge
+            #Guardar info de quan acabara d'omplir el diposit
+            infVeh[2] = t
+            #Afegir l'esdeveniment
+            esdeveniment.append([t,'diposit ple', infVeh])
+        else:
+            #no fa re, el seguent cotxe que surti mirara si algu ha de omplir el diposit
+        #Afegir el vehicle a la cua
+        ST.append(infVeh)
+        
+    elif esd[]
     if tipusEsd == 'arribada':
         #mirar cua mes curta i afegirse
         if esdeveniment[0][2] == 'cotxe':
