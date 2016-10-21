@@ -56,7 +56,7 @@ def llistaArribada():
     llista = []
     k = 0
     t = exponencial(5)
-    while t< 16*60:
+    while t< 16*60 - 7:
         #afegeix cotxe a la llista
         llista.append([t, 'arribada', [t, 0,0,0,0, seguentVehicle(), 'id' + str(k)]])
         
@@ -64,4 +64,5 @@ def llistaArribada():
         t += exponencial(5)
         k += 1
     #retorna la llista amb tots els esdeveniments ja ordenats
+    #print('Vehicles que entren: ' + str(len(llista)))
     return llista

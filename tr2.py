@@ -10,6 +10,37 @@ from utils import tempsDipositVehicle
 import sys
 
 
+def mitjanaSimulacio(quant):
+    
+    avTotTime = [0,0,0]
+    avQueTime = [0,0,0]
+    avQue2Time = [0,0,0]
+    avFinTime = 0
+    
+    for i in range(quant):
+        qt, q2t, tt, ft = simulacio()
+        for a in range(3):
+            avTotTime[a] += tt[a]/quant
+            avQueTime[a] += qt[a]/quant
+            avQue2Time[a] += q2t[a]/quant
+        avFinTime += ft/quant
+    print(avQue2Time)
+    print('List of results of ' + str(quant) + ' simulations:')
+    print(' -Average gas queue wait time: ' + str(avQueTime[1]))
+    print(' -Average pay queue wait time: ' + str(avQue2Time[1]))
+    print(' -Average total time:          ' + str(avTotTime[1]))
+    print(' -Average closing time:        ' + str(avFinTime))
+    print('')
+    print(' -Min gas queue wait time:     ' + str(avQueTime[0]))
+    print(' -Min pay queue wait time:     ' + str(avQue2Time[0]))
+    print(' -Min total time:              ' + str(avTotTime[0]))
+    print('')
+    print(' -Max gas queue wait time:     ' + str(avQueTime[2]))
+    print(' -Max pay queue wait time:     ' + str(avQue2Time[2]))
+    print(' -Max total time:              ' + str(avTotTime[2]))
+    
+    return 0
+
 def simulacio():
     global rellotge
     global SM
@@ -18,7 +49,7 @@ def simulacio():
     global esdeveniment
     global lSC
     global lSM
-    
+    global infoFinal
     
     #comensa l'estat inicial
     inicialitzarVariables()
@@ -32,9 +63,36 @@ def simulacio():
         #Gestionar un esdeveniment
         gestionarEsdeveniment()
         
-    #Aqui caldria imprimir la informacio util
-
-    return 0
+    #Imprimir informacio util
+    averageTotalTime = [infoFinal[-1][4],0,0]
+    averageWaitTime =  [infoFinal[-1][4],0,0]
+    averageWaitTime2 = [infoFinal[-1][4],0,0]
+    
+    for temp in infoFinal:
+        averageWaitTime[1] += temp[7]
+        averageWaitTime2[1] += temp[8]
+        averageTotalTime[1] += temp[9]
+    
+    averageWaitTime[1] /= len(infoFinal)
+    averageWaitTime2[1] /= len(infoFinal)
+    averageTotalTime[1] /= len(infoFinal)
+    
+    infoFinal = sorted(infoFinal, key =  lambda infoFinal: infoFinal[7])
+    averageWaitTime[0] = infoFinal[0][7]
+    averageWaitTime[2] = infoFinal[-1][7]
+    
+    infoFinal = sorted(infoFinal, key =  lambda infoFinal: infoFinal[8])
+    averageWaitTime2[0] = infoFinal[0][8]
+    averageWaitTime2[2] = infoFinal[-1][8]
+    
+    infoFinal = sorted(infoFinal, key =  lambda infoFinal: infoFinal[9])
+    averageTotalTime[0] = infoFinal[0][9]
+    averageTotalTime[2] = infoFinal[-1][9]
+    
+    #print('Av. Total wait time: ' + str(averageTotalTime))
+    #print('Av. Que wait time: ' + str(averageWaitTime))
+    infoFinal = sorted(infoFinal, key =  lambda infoFinal: infoFinal[4])
+    return averageWaitTime, averageWaitTime2, averageTotalTime, infoFinal[-1][4]
     
     
 def gestionarEsdeveniment():
@@ -45,6 +103,7 @@ def gestionarEsdeveniment():
     global esdeveniment
     global lSC
     global lSM
+    global infoFinal
     
     #Agafar esdeveniment
     esd = esdeveniment.pop(0)
@@ -72,7 +131,6 @@ def gestionarEsdeveniment():
         
     elif esd[1] == 'diposit ple':
         if C == True:
-            print('ln76')
             lST, ST, index = agafarCuaVehicle(infVeh)
             #Evitar que ningu mes entri a caixa
             C = False
@@ -81,12 +139,7 @@ def gestionarEsdeveniment():
             #Guardar info de quan sortira de caixa
             infVeh[4] = rellotge + 2
             #Actualitzar llista on esta el vehicle
-            print('DOING SOMETHINNNNNGGG:    '+str(index))
-            print(SM)
-            print(SC)
             ST[index] = infVeh
-            print(SM)
-            print(SC)
             #Crear nou esdeveniment
             esdeveniment.append([infVeh[4], 'sortir caixa', infVeh])
         #else:
@@ -97,7 +150,6 @@ def gestionarEsdeveniment():
         C = True
         
         #Agafar info del cotxe que surt
-        print('ln94')
         lST, ST, index = agafarCuaVehicle(infVeh)
         
         ##################
@@ -125,7 +177,9 @@ def gestionarEsdeveniment():
         #Mirar si algu ha de omplir el diposit
         
         #Treure el cotxe de la llista
-        ST.pop(index)
+        temp = ST.pop(index)
+        temp += [temp[1]-temp[0], temp[3]-temp[2], temp[4]-temp[0]]
+        infoFinal.append(temp)
         
         minim = rellotge
         vehicle = []
@@ -143,7 +197,6 @@ def gestionarEsdeveniment():
         
         #Si algun vehicle ha d'anar a caixa ho fa
         if vehicle != []:
-            print('ln137')
             lST2, ST2, index2 = agafarCuaVehicle(vehicle)
             #Evitar que ningu mes entri a caixa
             C = False
@@ -159,6 +212,9 @@ def gestionarEsdeveniment():
         
     else:
         sys.exit('Esdeveniment no possible')
+    
+    #Ordenar llista de esdeveniments
+    esdeveniment = sorted(esdeveniment, key =  lambda esdeveniment: esdeveniment[0])
         
     return 0
     
@@ -170,6 +226,7 @@ def inicialitzarVariables():
     global esdeveniment
     global lSC
     global lSM
+    global infoFinal
     
     #Indicar quants sortidors hi ha a cada cua
     lSC = 3
@@ -184,6 +241,9 @@ def inicialitzarVariables():
     
     #Crear tots els esdeveniments d'arribada
     esdeveniment = llistaArribada()
+    
+    #Inicialitzar llista de esdeveniments succeits
+    infoFinal = []
     
     return 0
 
@@ -215,11 +275,6 @@ def agafarCuaVehicle(info):
     for i in SM:
         if i[6] == mat:
             return lSM,SM,SM.index(i)
-    print(info)
-    print('Cua SC')
-    print(SC)
-    print('Cua SM')
-    print(SM)
     sys.exit('error: no entra be a agafarCuaVehicle')
     
     
