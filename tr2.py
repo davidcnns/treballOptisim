@@ -5,8 +5,7 @@ Created on Thu Oct 20 11:55:12 2016
 @author: David
 """
 
-from utils import seguentVehicle, tempsDipositMoto, tempsDipositCotxe, llistaArribada
-from utils import tempsDipositVehicle
+from utils import tempsDipositVehicle, llistaArribada
 import sys
 
 
