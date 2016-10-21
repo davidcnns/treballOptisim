@@ -17,13 +17,24 @@ def mitjanaSimulacio(quant):
     avQue2Time = [0,0,0]
     avFinTime = 0
     
+    file = open('ResultatsSim.csv', 'w')
+    #Queue1 es la cua per omplir el diposit
+    #Queue2 es la cua per anar a caixa
+    file.write('Queue1,Queue2,Total Time,Finish Time\n')
+    
     for i in range(quant):
         qt, q2t, tt, ft = simulacio()
         for a in range(3):
             avTotTime[a] += tt[a]/quant
             avQueTime[a] += qt[a]/quant
             avQue2Time[a] += q2t[a]/quant
+            
+        file.write(str(qt[1])+','+str(q2t[1])+','+
+                   str(tt[1])+','+str(ft)+'\n')
         avFinTime += ft/quant
+        
+    file.close()
+    
     print(avQue2Time)
     print('List of results of ' + str(quant) + ' simulations:')
     print(' -Average gas queue wait time: ' + str(avQueTime[1]))
