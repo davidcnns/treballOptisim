@@ -8,6 +8,41 @@ Created on Thu Oct 20 11:55:12 2016
 from utils import tempsDipositVehicle, llistaArribada
 import sys
 
+def mitjanes10():
+    f = open('ResultatsSim.csv','r')
+    g = open('ResultatsReduits.csv','a')
+    k = 0
+    avqt = 0
+    avq2t = 0
+    avtt = 0
+    avft = 0
+    for line in f:
+        qt, q2t, tt, ft = line.split(',')
+        if qt != 'Queue1':
+            avqt += float(qt)
+            avq2t += float(q2t)
+            avtt += float(tt)
+            avft += float(ft)
+            k+=1
+            if k == 10:
+                k = 0
+                
+                Tavqt = avqt/10
+                Tavq2t = avq2t/10
+                Tavtt = avtt/10
+                Tavft = avft/10             
+                
+                g.write(str(Tavqt)+';'+str(Tavq2t)+';'+
+                   str(Tavtt)+';'+str(Tavft)+'\n')
+                
+                avqt = 0
+                avq2t = 0
+                avtt = 0
+                avft = 0
+    f.close()
+    g.close()
+    
+            
 
 def mitjanaSimulacio(quant):
     
